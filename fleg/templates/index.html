@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag</title>
+</head>
+<body>
+    <h1>Ye chalega?</h1>
+    <form action="/generate_flag" method="post">
+        <label for="number">Enter a number:</label>
+        <input type="text" id="number" name="number">
+        <button type="submit">Generate</button>
+    </form>
+    <h2>Generated Flag:</h2>
+    <img id="flag-image" src="" alt="Generated Flag" style="display:none;">
+    <script>
+        const form = document.querySelector('form');
+        form.onsubmit = async (event) => {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/generate_flag', {
+                method: 'POST',
+                body: formData
+            });
+            const flagImage = document.getElementById('flag-image');
+            if (response.ok) {
+                flagImage.src = URL.createObjectURL(await response.blob());
+                flagImage.style.display = 'block';
+            } else {
+                const errorText = await response.text();
+                alert(errorText);
+            }
+        };
+    </script>
+</body>
+</html>
