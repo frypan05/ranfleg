@@ -127,6 +127,9 @@ flag_functions = [create_france_flag, create_germany_flag, create_italy_flag, cr
 
 
 
+#functions finished
+
+
 
 @app.route('/')
 def index():
